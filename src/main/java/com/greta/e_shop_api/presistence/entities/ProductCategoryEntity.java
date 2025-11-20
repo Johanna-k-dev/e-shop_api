@@ -1,47 +1,28 @@
 package com.greta.e_shop_api.presistence.entities;
 
-
 import jakarta.persistence.*;
-
-import java.math.BigInteger;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "product_category")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class ProductCategoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
-
-
-    @Column(nullable = false)
-    private BigInteger productId;
+    private long id;
 
     @Column(nullable = false)
-    private BigInteger categoryId;
+    private long productId;
 
-    public BigInteger getId() {
-        return id;
-    }
-
-    public void setId(BigInteger id) {
-        this.id = id;
-    }
+    @Column(nullable = false)
+    private long categoryId;
 
 
-    public BigInteger getProductId() {
-        return productId;
-    }
-
-    public void setProductId(BigInteger productId) {
-        this.productId = productId;
-    }
-
-    public BigInteger getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(BigInteger categoryId) {
-        this.categoryId = categoryId;
-    }
 }

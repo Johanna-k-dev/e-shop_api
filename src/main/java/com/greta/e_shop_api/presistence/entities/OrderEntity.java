@@ -2,12 +2,20 @@ package com.greta.e_shop_api.presistence.entities;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "orders")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
