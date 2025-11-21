@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "order_item")
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-public class OrdertItemEntity {
+public class OrderItemEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,12 +27,6 @@ public class OrdertItemEntity {
 
     @Column(nullable = false)
     private Double unitPrice;
-
-    @Column(nullable = false)
-    private long orderId;
-
-    @Column(nullable = false)
-    private long productId;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -50,4 +45,11 @@ public class OrdertItemEntity {
         updatedAt = LocalDateTime.now();
     }
 
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    private OrderEntity order;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private ProductEntity product;
 }

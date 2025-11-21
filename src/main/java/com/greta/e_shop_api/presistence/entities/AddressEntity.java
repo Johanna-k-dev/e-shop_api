@@ -50,7 +50,7 @@ public class AddressEntity {
         updatedAt = LocalDateTime.now();
     }
 
-    @Column(nullable = false)
-    private long customId;
-
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private CustomerEntity customer; // <-- ici l'adresse “connaît” son customer
 }
