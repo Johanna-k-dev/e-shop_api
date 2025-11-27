@@ -60,11 +60,7 @@ public class ProductEntity {
         updatedAt = LocalDateTime.now();
     }
 
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItemEntity> orderItems = new ArrayList<>();
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product")
     private List<ProductCategoryEntity> productCategories = new ArrayList<>();
 
 }

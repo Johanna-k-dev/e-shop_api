@@ -52,4 +52,5 @@ public class OrderItemEntity {
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private ProductEntity product;
+
 }
