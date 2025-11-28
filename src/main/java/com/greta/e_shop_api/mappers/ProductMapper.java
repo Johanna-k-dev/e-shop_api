@@ -4,6 +4,8 @@ import com.greta.e_shop_api.exposition.dtos.ProductRequestDTO;
 import com.greta.e_shop_api.exposition.dtos.ProductResponseDTO;
 import com.greta.e_shop_api.presistence.entities.ProductEntity;
 
+import java.math.BigDecimal;
+
 public class ProductMapper {
     // 👇 Convertit un ProductRequestDTO en ProductEntity
     public static ProductEntity toEntity(ProductRequestDTO dto) {
@@ -12,7 +14,7 @@ public class ProductMapper {
         entity.setDescription(dto.description());
         entity.setImageUrl(dto.imageUrl());
         entity.setIsActive(dto.isActive() != null ? dto.isActive() : true);
-        entity.setPrice(dto.price());
+        entity.setPrice(Double.valueOf(dto.price()));
         entity.setStock(dto.stock());
         entity.setDiscount(dto.discount());
         return entity;
