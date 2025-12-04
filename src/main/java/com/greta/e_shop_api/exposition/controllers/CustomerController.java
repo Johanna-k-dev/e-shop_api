@@ -1,71 +1,53 @@
 package com.greta.e_shop_api.exposition.controllers;
 
-import com.greta.e_shop_api.presistence.entities.CustomerEntity;
-import com.greta.e_shop_api.presistence.repositories.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import com.greta.e_shop_api.domain.services.CustomerService;
+import com.greta.e_shop_api.exposition.dtos.CustomerRequestDTO;
+import com.greta.e_shop_api.exposition.dtos.CustomerResponseDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/customers")
+@RequiredArgsConstructor
 public class CustomerController {
 
-    @Autowired
-    private CustomerRepository customerRepository;
+    private final CustomerService customerService;
 
-    @GetMapping
-    private List<CustomerEntity> getAllCustomers() {
-        List<CustomerEntity> customers = customerRepository.findAll();
-        return customers;
+    @PostMapping
+    public ResponseEntity<CustomerResponseDTO> create(@Valid @RequestBody CustomerRequestDTO dto) {
+        return ResponseEntity.ok(customerService.create(dto));
     }
 
-    @GetMapping("/search")
-    private List<CustomerEntity> searchCustomers(@RequestParam String keyword) {
-        List<CustomerEntity> customers = customerRepository.findByLastNameContainingIgnoreCase(keyword);
-        return customers;
+    @GetMapping
+    public ResponseEntity<List<CustomerResponseDTO>> getAll() {
+        return ResponseEntity.ok(customerService.getAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomerEntity> getCustomerById(@PathVariable Long id) {
-        CustomerEntity customer = customerRepository.findById(id).orElse(null);
-
-        if (customer != null) {
-            return ResponseEntity.ok(customer);
-        }else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @PostMapping
-    public ResponseEntity<CustomerEntity> saveCustomer(@RequestBody CustomerEntity customer) {
-        CustomerEntity saved = customerRepository.save(customer);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    public ResponseEntity<CustomerResponseDTO> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(customerService.getById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerEntity> updateCustomer(@PathVariable Long id, @RequestBody CustomerEntity newCustomer) {
-
-        CustomerEntity existing = customerRepository.findById(id).orElse(null);
-
-        if (existing != null) {
-            existing.setFirstName(newCustomer.getFirstName());
-            existing.setLastName(newCustomer.getLastName());
-            CustomerEntity updated = customerRepository.save(existing);
-            return ResponseEntity.ok(updated);
-        }else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<CustomerResponseDTO> update(
+            @PathVariable Long id,
+            @Valid @RequestBody CustomerRequestDTO dto
+    ) {
+        return ResponseEntity.ok(customerService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<CustomerEntity> deleteCustomer(@PathVariable Long id) {
-        if (customerRepository.existsById(id)) {
-            customerRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        customerService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<CustomerResponseDTO>> search(@RequestParam String keyword) {
+        return ResponseEntity.ok(customerService.searchByLastName(keyword));
     }
 }
