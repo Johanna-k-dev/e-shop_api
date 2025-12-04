@@ -1,35 +1,37 @@
 package com.greta.e_shop_api.exposition.controllers;
 
-
+import com.greta.e_shop_api.domain.services.FavoriteService; // 👈 important
 import com.greta.e_shop_api.presistence.entities.FavoriteEntity;
-import com.greta.e_shop_api.presistence.entities.ProductEntity;
-import com.greta.e_shop_api.presistence.repositories.CustomerRepository;
-import com.greta.e_shop_api.presistence.repositories.FavoriteRepository;
-import com.greta.e_shop_api.presistence.repositories.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/favorite")
+@RequestMapping("/favorites")
+@RequiredArgsConstructor
 public class FavoriteController {
 
-    @Autowired
-    private FavoriteRepository favoriteRepository;
-    @Autowired
-    private CustomerRepository customerRepository;
-    @Autowired
-    private ProductRepository productRepository;
+    private final FavoriteService favoriteService;
 
-    @GetMapping
-    List<FavoriteEntity> getAllFavorites(){
-        List<FavoriteEntity> favorites = favoriteRepository.findAll() ;
-        return favorites;
-    };
+    @GetMapping("/customer/{customerId}")
+    public ResponseEntity<List<FavoriteEntity>> getAllFavoritesByCustomerId(@PathVariable Long customerId) {
+        List<FavoriteEntity> favorites = favoriteService.getFavoritesByCustomer(customerId);
+        return ResponseEntity.ok(favorites);
+    }
 
-    // @GetMapping("/customer-id") List<FavoriteEntity> getAllFavoritesByCustomerId(@RequestParam Long customerId){}
+    @PostMapping("/customer/{customerId}/product/{productId}")
+    public ResponseEntity<FavoriteEntity> addFavorite(@PathVariable Long customerId,
+                                                      @PathVariable Long productId) {
+        FavoriteEntity favorite = favoriteService.addFavorite(customerId, productId);
+        return ResponseEntity.ok(favorite);
+    }
+
+    @DeleteMapping("/customer/{customerId}/product/{productId}")
+    public ResponseEntity<Void> removeFavorite(@PathVariable Long customerId,
+                                               @PathVariable Long productId) {
+        favoriteService.removeFavorite(customerId, productId);
+        return ResponseEntity.noContent().build();
+    }
 }

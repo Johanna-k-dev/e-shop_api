@@ -1,6 +1,7 @@
 package com.greta.e_shop_api.presistence.entities;
 
 
+import com.greta.e_shop_api.exposition.dtos.FavoriteRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,4 +28,7 @@ public class FavoriteEntity {
     @JoinColumn(name = "customer_id", nullable = false)
     private CustomerEntity customer;
 
+    public void  setId(FavoriteRequestDTO dto) {
+        this.id = dto.customerId();
+    }
 }
