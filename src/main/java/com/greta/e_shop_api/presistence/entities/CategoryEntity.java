@@ -1,6 +1,7 @@
 package com.greta.e_shop_api.presistence.entities;
 
 
+import com.greta.e_shop_api.exposition.dtos.CategoryRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,7 +44,11 @@ public class CategoryEntity {
         updatedAt = LocalDateTime.now();
     }
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "category")
     private List<ProductCategoryEntity> productCategories = new ArrayList<>();
+
+
+
+
 
 }
