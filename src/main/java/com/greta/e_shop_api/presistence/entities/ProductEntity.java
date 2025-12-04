@@ -1,5 +1,6 @@
 package com.greta.e_shop_api.presistence.entities;
 
+
 import com.greta.e_shop_api.exposition.dtos.ProductRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -55,11 +56,17 @@ public class ProductEntity {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
     }
+
     public void updateFrom(ProductRequestDTO dto) {
         this.name = dto.name();
-        this.price = Double.valueOf(dto.price());
+        this.price = dto.price();
         this.stock = dto.stock();
-        // ...
+        this.discount = dto.discount();
+        this.imageUrl = dto.imageUrl();
+        this.isActive = dto.isActive();
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+
     }
 
     @PreUpdate

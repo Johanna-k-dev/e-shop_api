@@ -4,7 +4,7 @@ import com.greta.e_shop_api.exposition.dtos.ProductRequestDTO;
 import com.greta.e_shop_api.exposition.dtos.ProductResponseDTO;
 import com.greta.e_shop_api.presistence.entities.ProductEntity;
 
-import java.math.BigDecimal;
+
 
 public class ProductMapper {
     // 👇 Convertit un ProductRequestDTO en ProductEntity
