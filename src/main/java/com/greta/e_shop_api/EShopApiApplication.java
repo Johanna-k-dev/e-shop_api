@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 @SpringBootApplication
-@RestController
 public class EShopApiApplication {
 
 	public static void main(String[] args) {
@@ -20,13 +19,5 @@ public class EShopApiApplication {
 		SpringApplication.run(EShopApiApplication.class, args);
 	}
 
-    @GetMapping("/hello")
-    public String sayHello() {
-        return "Hello World!";
-    };
 
-    @GetMapping("/am-i-a-warthog")
-    public String amIAWarthog() {
-        return "Yes of course !";
-    };
 }
