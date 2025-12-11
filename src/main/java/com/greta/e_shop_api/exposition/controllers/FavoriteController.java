@@ -1,6 +1,7 @@
 package com.greta.e_shop_api.exposition.controllers;
 
 import com.greta.e_shop_api.domain.services.FavoriteService; // 👈 important
+import com.greta.e_shop_api.exposition.dtos.FavoriteResponseDTO;
 import com.greta.e_shop_api.presistence.entities.FavoriteEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,11 @@ import java.util.List;
 public class FavoriteController {
 
     private final FavoriteService favoriteService;
+
+    @GetMapping
+    public ResponseEntity<List<FavoriteResponseDTO>> getAll() {
+        return ResponseEntity.ok(favoriteService.getAll());
+    }
 
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<List<FavoriteEntity>> getAllFavoritesByCustomerId(@PathVariable Long customerId) {

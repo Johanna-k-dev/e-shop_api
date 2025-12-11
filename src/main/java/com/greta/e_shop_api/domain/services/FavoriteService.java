@@ -1,6 +1,8 @@
 package com.greta.e_shop_api.domain.services;
 
 import com.greta.e_shop_api.exceptions.ResourceNotFoundException;
+import com.greta.e_shop_api.exposition.dtos.FavoriteResponseDTO;
+import com.greta.e_shop_api.mappers.FavoriteMapper;
 import com.greta.e_shop_api.presistence.entities.CustomerEntity;
 import com.greta.e_shop_api.presistence.entities.FavoriteEntity;
 import com.greta.e_shop_api.presistence.entities.ProductEntity;
@@ -19,6 +21,13 @@ public class FavoriteService {
     private final FavoriteRepository favoriteRepository;
     private final CustomerRepository customerRepository;
     private final ProductRepository productRepository;
+
+    public List<FavoriteResponseDTO> getAll() {
+        return favoriteRepository.findAll()
+                .stream()
+                .map(FavoriteMapper::toDto)
+                .toList();
+    }
 
     public List<FavoriteEntity> getFavoritesByCustomer(Long customerId) {
         return favoriteRepository.findByCustomer_Id(customerId);
