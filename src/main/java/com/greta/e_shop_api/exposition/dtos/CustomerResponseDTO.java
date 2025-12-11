@@ -10,3 +10,4 @@ public record CustomerResponseDTO(
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {}
+

@@ -23,14 +23,21 @@ public class CustomerService {
 
     public CustomerResponseDTO create(CustomerRequestDTO dto) {
 
-        AddressEntity address = addressRepository.findById(dto.addressId())
-                .orElseThrow(() -> new ResourceNotFoundException("Adresse introuvable : " + dto.addressId()));
-
         CustomerEntity entity = CustomerMapper.toEntity(dto);
-        entity.setAddress(address);
 
-        return CustomerMapper.toDto(customerRepository.save(entity));
+
+        if (dto.addressId() != null) {
+            AddressEntity address = addressRepository.findById(dto.addressId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Adresse introuvable : " + dto.addressId()));
+            entity.setAddress(address);
+        } else {
+            entity.setAddress(null);
+        }
+
+        CustomerEntity saved = customerRepository.save(entity);
+        return CustomerMapper.toDto(saved);
     }
+
 
     public List<CustomerResponseDTO> getAll() {
         return customerRepository.findAll()
@@ -51,15 +58,19 @@ public class CustomerService {
         CustomerEntity entity = customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Client introuvable : " + id));
 
-        AddressEntity address = addressRepository.findById(dto.addressId())
-                .orElseThrow(() -> new ResourceNotFoundException("Adresse introuvable : " + dto.addressId()));
-
         entity.setFirstName(dto.firstName());
         entity.setLastName(dto.lastName());
-        entity.setAddress(address);
 
-        return CustomerMapper.toDto(customerRepository.save(entity));
+        if (dto.addressId() != null) {
+            AddressEntity address = addressRepository.findById(dto.addressId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Adresse introuvable : " + dto.addressId()));
+            entity.setAddress(address);
+        }
+
+        CustomerEntity updated = customerRepository.save(entity);
+        return CustomerMapper.toDto(updated);
     }
+
 
     public void delete(Long id) {
         CustomerEntity entity = customerRepository.findById(id)

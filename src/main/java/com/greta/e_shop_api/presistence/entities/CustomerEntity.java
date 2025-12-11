@@ -46,7 +46,7 @@ public class CustomerEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "address_id", nullable = false)
+    @JoinColumn(name = "address_id", nullable = true)
     private AddressEntity address;
 }
 
