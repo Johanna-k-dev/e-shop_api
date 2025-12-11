@@ -1,6 +1,7 @@
 package com.greta.e_shop_api.exposition.controllers;
 
 import com.greta.e_shop_api.domain.services.ProductService;
+import com.greta.e_shop_api.exposition.dtos.CategoryResponseDTO;
 import com.greta.e_shop_api.exposition.dtos.ProductRequestDTO;
 import com.greta.e_shop_api.exposition.dtos.ProductResponseDTO;
 import jakarta.validation.Valid;
@@ -28,6 +29,11 @@ public class ProductController {
     public ResponseEntity<ProductResponseDTO> getById(@PathVariable Long id) {
         ProductResponseDTO response = productService.findById(id);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductResponseDTO>> search(@RequestParam String keyword) {
+        return ResponseEntity.ok(productService.search(keyword));
     }
 
     @PostMapping

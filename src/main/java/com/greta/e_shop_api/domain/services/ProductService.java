@@ -52,4 +52,12 @@ public class ProductService {
         }
         productRepository.deleteById(id);
     }
+
+    public List<ProductResponseDTO> search(String keyword) {
+        return productRepository.findByNameContainingIgnoreCase(keyword)
+                .stream()
+                .map(ProductMapper::toDto)
+                .toList();
+
+    }
 }
