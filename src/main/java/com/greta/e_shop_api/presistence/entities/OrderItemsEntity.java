@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "order_item")
@@ -16,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class OrderItemEntity {
+public class OrderItemsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +32,16 @@ public class OrderItemEntity {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
+    @Column(nullable = true)
+    private Double total;
+
+    @Column(nullable = true)
+    private Double tvaAmount;
+
+    @Column(nullable = true)
+    private Double totalWithTva;
+
+
     @PrePersist
     public void onCreate() {
         createdAt = LocalDateTime.now();
@@ -46,7 +54,7 @@ public class OrderItemEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
+    @JoinColumn(name = "items_id", nullable = false)
     private OrderEntity order;
 
     @ManyToOne
