@@ -28,7 +28,7 @@ public class AddressEntity {
     private String city;
 
     @Column(nullable = false, length = 10)
-    private int zipCode;
+    private String zipCode;
 
     @Column(nullable = false)
     private String county;
@@ -49,5 +49,9 @@ public class AddressEntity {
     public void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private CustomerEntity customer;
 
 }

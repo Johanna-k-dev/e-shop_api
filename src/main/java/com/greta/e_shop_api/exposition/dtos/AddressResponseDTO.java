@@ -6,7 +6,7 @@ public record AddressResponseDTO(
         Long id,
         String street,
         String city,
-        int zipCode,
+        String zipCode,
         String county,
         LocalDateTime createdAt,
         LocalDateTime updatedAt

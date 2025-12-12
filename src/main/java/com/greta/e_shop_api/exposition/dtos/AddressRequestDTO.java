@@ -14,7 +14,7 @@ public record AddressRequestDTO(
 
         @NotNull(message = "Le code postal est obligatoire")
         @Min(value = 1, message = "Le code postal doit être valide")
-        int zipCode,
+        String zipCode,
 
         @NotBlank(message = "Le département (county) est obligatoire")
         String county
