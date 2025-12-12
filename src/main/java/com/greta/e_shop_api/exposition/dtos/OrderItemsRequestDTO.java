@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
 public record OrderItemsRequestDTO(
-
+        @NotNull
         @Positive(message = "La quantité doit être positive")
         int quantity,
 
@@ -20,4 +20,5 @@ public record OrderItemsRequestDTO(
         @NotNull(message = "L'identifiant du produit est obligatoire")
         @Positive(message = "L'identifiant du produit doit être positif")
         Long productId
+
 ) {}

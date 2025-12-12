@@ -1,5 +1,6 @@
 package com.greta.e_shop_api.domain.services;
 
+import com.greta.e_shop_api.domain.rules.OrderItemsRules;
 import com.greta.e_shop_api.exceptions.ResourceNotFoundException;
 import com.greta.e_shop_api.exposition.dtos.OrderItemsRequestDTO;
 import com.greta.e_shop_api.exposition.dtos.OrderItemsResponseDTO;
@@ -38,6 +39,7 @@ public class OrderItemsService {
         entity.setOrder(order);
         entity.setProduct(product);
 
+        OrderItemsRules.validateBeforeCreation(entity);
 
         double totalHT = dto.quantity() * dto.unitPrice();
         double tvaAmount = totalHT * TVA_RATE;
@@ -49,7 +51,6 @@ public class OrderItemsService {
 
         return OrderItemsMapper.toDto(orderItemRepository.save(entity));
     }
-
 
     public List<OrderItemsResponseDTO> getAll() {
         return orderItemRepository.findAll()
@@ -66,6 +67,7 @@ public class OrderItemsService {
     }
 
     public OrderItemsResponseDTO update(Long id, OrderItemsRequestDTO dto) {
+
         OrderItemsEntity entity = orderItemRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item introuvable : " + id));
 
@@ -80,6 +82,7 @@ public class OrderItemsService {
         entity.setOrder(order);
         entity.setProduct(product);
 
+        OrderItemsRules.validateBeforeCreation(entity);
 
         double totalHT = dto.quantity() * dto.unitPrice();
         double tvaAmount = totalHT * TVA_RATE;
@@ -91,7 +94,6 @@ public class OrderItemsService {
 
         return OrderItemsMapper.toDto(orderItemRepository.save(entity));
     }
-
 
     public void delete(Long id) {
         OrderItemsEntity entity = orderItemRepository.findById(id)

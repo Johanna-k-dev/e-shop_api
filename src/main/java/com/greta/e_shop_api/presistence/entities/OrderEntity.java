@@ -42,15 +42,25 @@ public class OrderEntity {
         updatedAt = LocalDateTime.now();
     }
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
     private CustomerEntity customer;
 
-    @OneToMany(
-            mappedBy = "order",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<OrderItemEntity> items = new ArrayList<>();
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "address_id", nullable = false)
+    private AddressEntity address;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItemsEntity> items = new ArrayList<>();
+
+    @Column
+    private Double total;
+
+    @Column
+    private Double tvaAmount;
+
+    @Column
+    private Double totalWithTva;
 }
+
 
