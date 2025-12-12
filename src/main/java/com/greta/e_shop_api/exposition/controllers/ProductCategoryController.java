@@ -3,6 +3,7 @@ package com.greta.e_shop_api.exposition.controllers;
 import com.greta.e_shop_api.domain.services.ProductCategoryService;
 import com.greta.e_shop_api.exposition.dtos.ProductCategoryRequestDTO;
 import com.greta.e_shop_api.exposition.dtos.ProductCategoryResponseDTO;
+import com.greta.e_shop_api.exposition.dtos.ProductResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,11 @@ public class ProductCategoryController {
         return ResponseEntity.ok(productCategoryService.getById(id));
     }
 
+    @GetMapping("/category/{categoryId}/products")
+    public ResponseEntity<List<ProductResponseDTO>> getProductsByCategory(@PathVariable Long categoryId) {
+        return ResponseEntity.ok(productCategoryService.getProductsByCategory(categoryId));
+    }
+
     @GetMapping("/product/{productId}")
     public ResponseEntity<List<ProductCategoryResponseDTO>> findByProduct(@PathVariable Long productId) {
         return ResponseEntity.ok(productCategoryService.findByProduct(productId));
@@ -38,6 +44,7 @@ public class ProductCategoryController {
     public ResponseEntity<List<ProductCategoryResponseDTO>> findByCategory(@PathVariable Long categoryId) {
         return ResponseEntity.ok(productCategoryService.findByCategory(categoryId));
     }
+
 
     @PostMapping
     public ResponseEntity<ProductCategoryResponseDTO> create(@Valid @RequestBody ProductCategoryRequestDTO dto) {
@@ -49,4 +56,14 @@ public class ProductCategoryController {
         productCategoryService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/product/{productId}/category/{categoryId}")
+    public ResponseEntity<Void> deleteByProductAndCategory(
+            @PathVariable Long productId,
+            @PathVariable Long categoryId
+    ) {
+        productCategoryService.deleteByProductAndCategory(productId, categoryId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

@@ -27,6 +27,7 @@ public class ProductEntity {
     @Column(nullable = false, length = 80)
     private String name;
 
+    @Lob
     @Column(nullable = false)
     private String description;
 
