@@ -1,14 +1,17 @@
 package com.greta.e_shop_api.domain.services;
 
+import com.greta.e_shop_api.domain.rules.CustomerRules;
 import com.greta.e_shop_api.exceptions.ResourceNotFoundException;
+import com.greta.e_shop_api.exposition.dtos.AddressRequestDTO;
 import com.greta.e_shop_api.exposition.dtos.CustomerRequestDTO;
 import com.greta.e_shop_api.exposition.dtos.CustomerResponseDTO;
+import com.greta.e_shop_api.mappers.AddressMapper;
 import com.greta.e_shop_api.mappers.CustomerMapper;
 import com.greta.e_shop_api.presistence.entities.AddressEntity;
 import com.greta.e_shop_api.presistence.entities.CustomerEntity;
-
 import com.greta.e_shop_api.presistence.repositories.AddressRepository;
 import com.greta.e_shop_api.presistence.repositories.CustomerRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,20 +27,21 @@ public class CustomerService {
     public CustomerResponseDTO create(CustomerRequestDTO dto) {
 
         CustomerEntity entity = CustomerMapper.toEntity(dto);
-
+        CustomerRules.validateBeforeCreation(entity);
 
         if (dto.addressId() != null) {
             AddressEntity address = addressRepository.findById(dto.addressId())
                     .orElseThrow(() -> new ResourceNotFoundException("Adresse introuvable : " + dto.addressId()));
-            entity.setAddress(address);
-        } else {
-            entity.setAddress(null);
+
+            CustomerRules.validateAddressOwnership(address, entity);
+
+            address.setCustomer(entity);
+            entity.getAddresses().add(address);
         }
 
         CustomerEntity saved = customerRepository.save(entity);
         return CustomerMapper.toDto(saved);
     }
-
 
     public List<CustomerResponseDTO> getAll() {
         return customerRepository.findAll()
@@ -61,16 +65,27 @@ public class CustomerService {
         entity.setFirstName(dto.firstName());
         entity.setLastName(dto.lastName());
 
+        CustomerRules.validateBeforeUpdate(entity);
+
         if (dto.addressId() != null) {
             AddressEntity address = addressRepository.findById(dto.addressId())
                     .orElseThrow(() -> new ResourceNotFoundException("Adresse introuvable : " + dto.addressId()));
-            entity.setAddress(address);
+
+            CustomerRules.validateAddressOwnership(address, entity);
+
+            address.setCustomer(entity);
+
+            boolean alreadyExists = entity.getAddresses().stream()
+                    .anyMatch(a -> a.getId() == address.getId());
+
+            if (!alreadyExists) {
+                entity.getAddresses().add(address);
+            }
         }
 
         CustomerEntity updated = customerRepository.save(entity);
         return CustomerMapper.toDto(updated);
     }
-
 
     public void delete(Long id) {
         CustomerEntity entity = customerRepository.findById(id)
@@ -84,5 +99,22 @@ public class CustomerService {
                 .stream()
                 .map(CustomerMapper::toDto)
                 .toList();
+    }
+
+    @Transactional
+    public CustomerResponseDTO addAddress(Long customerId, AddressRequestDTO dto) {
+
+        CustomerEntity customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client introuvable : " + customerId));
+
+        CustomerRules.validateBeforeUpdate(customer);
+
+        AddressEntity address = AddressMapper.toEntity(dto);
+
+        address.setCustomer(customer);
+        customer.getAddresses().add(address);
+
+        CustomerEntity savedCustomer = customerRepository.save(customer);
+        return CustomerMapper.toDto(savedCustomer);
     }
 }

@@ -45,8 +45,7 @@ public class CustomerEntity {
         updatedAt = LocalDateTime.now();
     }
 
-    @ManyToOne
-    @JoinColumn(name = "address_id", nullable = true)
-    private AddressEntity address;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AddressEntity> addresses = new ArrayList<>();
 }
 
