@@ -47,5 +47,9 @@ public class CustomerEntity {
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AddressEntity> addresses = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 }
 
