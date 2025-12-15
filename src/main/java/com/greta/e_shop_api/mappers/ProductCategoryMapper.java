@@ -1,7 +1,7 @@
 package com.greta.e_shop_api.mappers;
 
 import com.greta.e_shop_api.exposition.dtos.ProductCategoryResponseDTO;
-import com.greta.e_shop_api.presistence.entities.ProductCategoryEntity;
+import com.greta.e_shop_api.persistence.entities.ProductCategoryEntity;
 
 public class ProductCategoryMapper {
 

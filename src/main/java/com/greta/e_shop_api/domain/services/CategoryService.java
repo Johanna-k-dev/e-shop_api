@@ -4,8 +4,8 @@ import com.greta.e_shop_api.exceptions.ResourceNotFoundException;
 import com.greta.e_shop_api.exposition.dtos.CategoryRequestDTO;
 import com.greta.e_shop_api.exposition.dtos.CategoryResponseDTO;
 import com.greta.e_shop_api.mappers.CategoryMapper;
-import com.greta.e_shop_api.presistence.entities.CategoryEntity;
-import com.greta.e_shop_api.presistence.repositories.CategoryRepository;
+import com.greta.e_shop_api.persistence.entities.CategoryEntity;
+import com.greta.e_shop_api.persistence.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

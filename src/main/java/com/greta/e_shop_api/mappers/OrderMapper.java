@@ -3,7 +3,7 @@ package com.greta.e_shop_api.mappers;
 import com.greta.e_shop_api.exposition.dtos.CustomerResponseDTO;
 import com.greta.e_shop_api.exposition.dtos.OrderItemsResponseDTO;
 import com.greta.e_shop_api.exposition.dtos.OrderResponseDTO;
-import com.greta.e_shop_api.presistence.entities.OrderEntity;
+import com.greta.e_shop_api.persistence.entities.OrderEntity;
 
 import java.util.List;
 

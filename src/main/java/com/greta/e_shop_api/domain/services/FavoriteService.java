@@ -4,12 +4,12 @@ import com.greta.e_shop_api.domain.rules.FavoriteRules;
 import com.greta.e_shop_api.exceptions.ResourceNotFoundException;
 import com.greta.e_shop_api.exposition.dtos.FavoriteResponseDTO;
 import com.greta.e_shop_api.mappers.FavoriteMapper;
-import com.greta.e_shop_api.presistence.entities.CustomerEntity;
-import com.greta.e_shop_api.presistence.entities.FavoriteEntity;
-import com.greta.e_shop_api.presistence.entities.ProductEntity;
-import com.greta.e_shop_api.presistence.repositories.CustomerRepository;
-import com.greta.e_shop_api.presistence.repositories.FavoriteRepository;
-import com.greta.e_shop_api.presistence.repositories.ProductRepository;
+import com.greta.e_shop_api.persistence.entities.CustomerEntity;
+import com.greta.e_shop_api.persistence.entities.FavoriteEntity;
+import com.greta.e_shop_api.persistence.entities.ProductEntity;
+import com.greta.e_shop_api.persistence.repositories.CustomerRepository;
+import com.greta.e_shop_api.persistence.repositories.FavoriteRepository;
+import com.greta.e_shop_api.persistence.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

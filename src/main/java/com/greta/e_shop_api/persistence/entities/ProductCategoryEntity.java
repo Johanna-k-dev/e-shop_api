@@ -1,4 +1,4 @@
-package com.greta.e_shop_api.presistence.entities;
+package com.greta.e_shop_api.persistence.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

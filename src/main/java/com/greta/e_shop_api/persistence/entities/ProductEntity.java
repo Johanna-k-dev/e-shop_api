@@ -1,4 +1,4 @@
-package com.greta.e_shop_api.presistence.entities;
+package com.greta.e_shop_api.persistence.entities;
 
 
 import com.greta.e_shop_api.exposition.dtos.ProductRequestDTO;
@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ProductEntity {
+public class ProductEntity   {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -46,11 +46,15 @@ public class ProductEntity {
     @Column(nullable = false)
     private double discount = 0.0;
 
+
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    private LocalDate promoStart;
+    private LocalDate promoEnd;
 
     @PrePersist
     public void onCreate() {

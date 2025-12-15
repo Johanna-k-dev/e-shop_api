@@ -2,7 +2,7 @@ package com.greta.e_shop_api.mappers;
 
 import com.greta.e_shop_api.exposition.dtos.CustomerRequestDTO;
 import com.greta.e_shop_api.exposition.dtos.CustomerResponseDTO;
-import com.greta.e_shop_api.presistence.entities.CustomerEntity;
+import com.greta.e_shop_api.persistence.entities.CustomerEntity;
 
 import java.util.List;
 

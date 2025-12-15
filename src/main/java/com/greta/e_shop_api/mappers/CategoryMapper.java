@@ -2,7 +2,7 @@ package com.greta.e_shop_api.mappers;
 
 import com.greta.e_shop_api.exposition.dtos.CategoryRequestDTO;
 import com.greta.e_shop_api.exposition.dtos.CategoryResponseDTO;
-import com.greta.e_shop_api.presistence.entities.CategoryEntity;
+import com.greta.e_shop_api.persistence.entities.CategoryEntity;
 
 public class CategoryMapper {
 

@@ -6,12 +6,13 @@ import com.greta.e_shop_api.exposition.dtos.OrderItemsRequestDTO;
 import com.greta.e_shop_api.exposition.dtos.OrderRequestDTO;
 import com.greta.e_shop_api.exposition.dtos.OrderResponseDTO;
 import com.greta.e_shop_api.mappers.OrderMapper;
-import com.greta.e_shop_api.presistence.entities.*;
-import com.greta.e_shop_api.presistence.repositories.AddressRepository;
-import com.greta.e_shop_api.presistence.repositories.CustomerRepository;
-import com.greta.e_shop_api.presistence.repositories.OrderRepository;
-import com.greta.e_shop_api.presistence.repositories.ProductRepository;
+import com.greta.e_shop_api.persistence.entities.*;
+import com.greta.e_shop_api.persistence.repositories.AddressRepository;
+import com.greta.e_shop_api.persistence.repositories.CustomerRepository;
+import com.greta.e_shop_api.persistence.repositories.OrderRepository;
+import com.greta.e_shop_api.persistence.repositories.ProductRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class OrderService {
     private final AddressRepository addressRepository;
 
     @Transactional
-    public OrderResponseDTO create(Long customerId, OrderRequestDTO dto) {
+    public OrderResponseDTO create(Long customerId, @Valid OrderRequestDTO dto) {
 
         CustomerEntity customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Client introuvable : " + customerId));
@@ -61,6 +62,8 @@ public class OrderService {
             item.setOrder(order);
             item.setProduct(product);
             item.setQuantity(itemDto.quantity());
+
+
             item.setUnitPrice(product.getPrice());
 
             double totalHT = item.getQuantity() * item.getUnitPrice();
@@ -88,6 +91,7 @@ public class OrderService {
         return OrderMapper.toDto(saved);
     }
 
+
     public List<OrderResponseDTO> getAll() {
         return orderRepository.findAll()
                 .stream()
@@ -102,7 +106,7 @@ public class OrderService {
         return OrderMapper.toDto(entity);
     }
 
-    public OrderResponseDTO update(Long orderId, Long customerId, OrderRequestDTO dto) {
+    public OrderResponseDTO update(Long orderId, Long customerId, @Valid OrderRequestDTO dto) {
 
         OrderEntity entity = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ResourceNotFoundException("Commande introuvable : " + orderId));
@@ -125,6 +129,7 @@ public class OrderService {
 
         return OrderMapper.toDto(orderRepository.save(entity));
     }
+
 
     public void delete(Long id) {
         OrderEntity entity = orderRepository.findById(id)

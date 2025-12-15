@@ -1,6 +1,6 @@
 package com.greta.e_shop_api.exposition.dtos;
 
-import com.greta.e_shop_api.presistence.entities.UserEntity;
+import com.greta.e_shop_api.persistence.entities.UserEntity;
 
 public record RegisterUserRequestDTO (
         String email,

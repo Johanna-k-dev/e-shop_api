@@ -1,7 +1,7 @@
 package com.greta.e_shop_api.mappers;
 
 import com.greta.e_shop_api.exposition.dtos.OrderItemsResponseDTO;
-import com.greta.e_shop_api.presistence.entities.OrderItemsEntity;
+import com.greta.e_shop_api.persistence.entities.OrderItemsEntity;
 
 public class OrderItemsMapper {
 

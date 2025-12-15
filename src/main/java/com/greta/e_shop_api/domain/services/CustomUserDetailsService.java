@@ -1,6 +1,6 @@
 package com.greta.e_shop_api.domain.services;
 
-import com.greta.e_shop_api.presistence.repositories.UserRepository;
+import com.greta.e_shop_api.persistence.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,7 +1,7 @@
 package com.greta.e_shop_api.mappers;
 
 import com.greta.e_shop_api.exposition.dtos.FavoriteResponseDTO;
-import com.greta.e_shop_api.presistence.entities.FavoriteEntity;
+import com.greta.e_shop_api.persistence.entities.FavoriteEntity;
 
 public class FavoriteMapper {
 

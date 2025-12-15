@@ -1,6 +1,6 @@
 package com.greta.e_shop_api.domain.rules;
 
-import com.greta.e_shop_api.presistence.entities.OrderEntity;
+import com.greta.e_shop_api.persistence.entities.OrderEntity;
 
 public class OrderRules {
 

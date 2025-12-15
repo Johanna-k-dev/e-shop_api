@@ -1,5 +1,4 @@
-package com.greta.e_shop_api.presistence.entities;
-
+package com.greta.e_shop_api.persistence.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,34 +9,38 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name ="address")
+@Table(name = "order_item")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class AddressEntity {
+public class OrderItemsEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false, length = 120)
-    private String street;
-
-    @Column(nullable = false, length = 80)
-    private String city;
-
-    @Column(nullable = false, length = 10)
-    private String zipCode;
+    @Column(nullable = false)
+    private int quantity;
 
     @Column(nullable = false)
-    private String county;
+    private Double unitPrice;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    @Column(nullable = true)
+    private Double total;
+
+    @Column(nullable = true)
+    private Double tvaAmount;
+
+    @Column(nullable = true)
+    private Double totalWithTva;
+
 
     @PrePersist
     public void onCreate() {
@@ -51,7 +54,11 @@ public class AddressEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    private CustomerEntity customer;
+    @JoinColumn(name = "items_id", nullable = false)
+    private OrderEntity order;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private ProductEntity product;
 
 }

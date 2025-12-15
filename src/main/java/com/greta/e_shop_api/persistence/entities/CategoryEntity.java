@@ -1,7 +1,6 @@
-package com.greta.e_shop_api.presistence.entities;
+package com.greta.e_shop_api.persistence.entities;
 
 
-import com.greta.e_shop_api.exposition.dtos.CategoryRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CategoryEntity {
+public class CategoryEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +32,7 @@ public class CategoryEntity {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @PrePersist
+     @PrePersist
     public void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();

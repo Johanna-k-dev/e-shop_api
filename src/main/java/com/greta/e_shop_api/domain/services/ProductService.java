@@ -5,9 +5,11 @@ import com.greta.e_shop_api.exceptions.ResourceNotFoundException;
 import com.greta.e_shop_api.exposition.dtos.ProductRequestDTO;
 import com.greta.e_shop_api.exposition.dtos.ProductResponseDTO;
 import com.greta.e_shop_api.mappers.ProductMapper;
-import com.greta.e_shop_api.presistence.entities.ProductEntity;
-import com.greta.e_shop_api.presistence.repositories.ProductRepository;
+import com.greta.e_shop_api.persistence.entities.ProductEntity;
+import com.greta.e_shop_api.persistence.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 
@@ -17,6 +19,24 @@ import java.util.List;
 public class ProductService {
     @Autowired
     private ProductRepository productRepository;
+
+    @Cacheable("products")
+    public List<ProductEntity> getAllProducts() {
+        System.out.println("🍣 Récupération depuis la base...");
+        return productRepository.findAll();
+    }
+
+
+    @CacheEvict(value = "products", allEntries = true)
+    public ProductEntity addProduct(ProductEntity product) {
+        return productRepository.save(product);
+    }
+
+
+    @CacheEvict(value = "products", allEntries = true)
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
+    }
 
     public List<ProductResponseDTO> findAll() {
         return productRepository.findAll().stream()

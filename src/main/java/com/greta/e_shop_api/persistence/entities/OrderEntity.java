@@ -1,5 +1,4 @@
-package com.greta.e_shop_api.presistence.entities;
-
+package com.greta.e_shop_api.persistence.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,21 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "orders")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class CustomerEntity {
+public class OrderEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @Column(nullable = false)
-    private String firstName;
-
-    @Column(nullable = false)
-    private String lastName;
+    @Column(nullable = false, length = 20)
+    private String status;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -45,11 +42,25 @@ public class CustomerEntity {
         updatedAt = LocalDateTime.now();
     }
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AddressEntity> addresses = new ArrayList<>();
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private CustomerEntity customer;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "address_id", nullable = false)
+    private AddressEntity address;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItemsEntity> items = new ArrayList<>();
+
+    @Column
+    private Double total;
+
+    @Column
+    private Double tvaAmount;
+
+    @Column
+    private Double totalWithTva;
 }
+
 

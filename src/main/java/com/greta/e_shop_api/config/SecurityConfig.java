@@ -42,54 +42,37 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                                // PUBLIC (lecture catalogue)
-                                .requestMatchers(HttpMethod.GET, "/product/**", "/category/**", "/product-categories/**", "/auth/**").permitAll()
-                                .requestMatchers(HttpMethod.POST,"auth/**").permitAll()
-
-                        // USER + ADMIN (fonctionnel user)
+                        //PUBLIC
                         .requestMatchers(HttpMethod.GET,
+                                "/product/**",
+                                "/category/**",
+                                "/product-categories/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-resources/**",
+                                "/swagger-ui.html",
+                                "/webjars/**"
+                        ).permitAll()
+                        .requestMatchers(HttpMethod.POST,"/auth/**").permitAll()
+
+                        // ADMIN ONLY
+                        .requestMatchers(HttpMethod.POST,   "/product/**", "/category/**", "/product-categories/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,    "/product/**", "/category/**", "/product-categories/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH,  "/product/**", "/category/**", "/product-categories/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/product/**", "/category/**", "/product-categories/**").hasRole("ADMIN")
+
+                        // USER + ADMIN
+                        .requestMatchers(
                                 "/addresses/**",
                                 "/order/**",
+                                "/order-items/**",
                                 "/favorites/**",
                                 "/customers/**"
                         ).hasAnyRole("USER", "ADMIN")
 
-                        .requestMatchers(HttpMethod.POST,
-                                "/favorites/**",
-                                "/order/**",
-                                "/order-items/**",
-                                "/addresses/**"
-                        ).hasAnyRole("USER", "ADMIN")
-
-                        .requestMatchers(HttpMethod.PUT,
-                                "/customers/**",
-                                "/addresses/**",
-                                "/order/**",
-                                "/order-items/**"
-                        ).hasAnyRole("USER", "ADMIN")
-
-                                // ADMIN ONLY (modif catalogue + suppressions sensibles)
-                        .requestMatchers(HttpMethod.GET,
-                                "/customers/**",
-                                "/order/**",
-                                "/order-items/**",
-                                "/product/**",
-                                "/category/**",
-                                "/product-categories/**"
-                        ).hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.POST, "/product/**", "/category/**", "/product-categories/**").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.PUT, "/product/**", "/category/**", "/product-categories/**").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.PATCH, "/product/**", "/category/**", "/product-categories/**").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.DELETE,
-                                        "/customers/**",
-                                        "/order/**",
-                                        "/order-items/**",
-                                        "/product/**",
-                                        "/category/**",
-                                        "/product-categories/**"
-                                ).hasRole("ADMIN")
                         .anyRequest().authenticated()
                 );
+
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         http.addFilterAfter(jwtExceptionHandlerFilter, JwtFilter.class);

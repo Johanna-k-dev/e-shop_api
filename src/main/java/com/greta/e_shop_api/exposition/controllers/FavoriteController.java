@@ -2,7 +2,7 @@ package com.greta.e_shop_api.exposition.controllers;
 
 import com.greta.e_shop_api.domain.services.FavoriteService; // 👈 important
 import com.greta.e_shop_api.exposition.dtos.FavoriteResponseDTO;
-import com.greta.e_shop_api.presistence.entities.FavoriteEntity;
+import com.greta.e_shop_api.persistence.entities.FavoriteEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

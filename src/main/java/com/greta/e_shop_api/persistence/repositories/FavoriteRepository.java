@@ -1,6 +1,6 @@
-package com.greta.e_shop_api.presistence.repositories;
+package com.greta.e_shop_api.persistence.repositories;
 
-import com.greta.e_shop_api.presistence.entities.FavoriteEntity;
+import com.greta.e_shop_api.persistence.entities.FavoriteEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

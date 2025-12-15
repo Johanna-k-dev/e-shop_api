@@ -1,6 +1,6 @@
 package com.greta.e_shop_api.config;
 
-import com.greta.e_shop_api.presistence.repositories.ProductRepository;
+import com.greta.e_shop_api.persistence.repositories.ProductRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;

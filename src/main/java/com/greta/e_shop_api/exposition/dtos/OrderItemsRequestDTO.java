@@ -13,10 +13,6 @@ public record OrderItemsRequestDTO(
         @PositiveOrZero(message = "Le prix unitaire ne peut pas être négatif")
         Double unitPrice,
 
-        @NotNull(message = "L'identifiant de la commande est obligatoire")
-        @Positive(message = "L'identifiant de la commande doit être positif")
-        Long orderId,
-
         @NotNull(message = "L'identifiant du produit est obligatoire")
         @Positive(message = "L'identifiant du produit doit être positif")
         Long productId

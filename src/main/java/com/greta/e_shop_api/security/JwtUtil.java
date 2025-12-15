@@ -1,7 +1,7 @@
 package com.greta.e_shop_api.security;
 
 import com.greta.e_shop_api.exceptions.JwtValidationException;
-import com.greta.e_shop_api.presistence.entities.UserEntity;
+import com.greta.e_shop_api.persistence.entities.UserEntity;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;

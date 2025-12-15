@@ -1,7 +1,7 @@
 package com.greta.e_shop_api.domain.rules;
 
-import com.greta.e_shop_api.presistence.entities.AddressEntity;
-import com.greta.e_shop_api.presistence.entities.CustomerEntity;
+import com.greta.e_shop_api.persistence.entities.AddressEntity;
+import com.greta.e_shop_api.persistence.entities.CustomerEntity;
 
 public class CustomerRules {
 

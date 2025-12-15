@@ -4,8 +4,8 @@ import com.greta.e_shop_api.exceptions.ResourceNotFoundException;
 import com.greta.e_shop_api.exposition.dtos.AddressRequestDTO;
 import com.greta.e_shop_api.exposition.dtos.AddressResponseDTO;
 import com.greta.e_shop_api.mappers.AddressMapper;
-import com.greta.e_shop_api.presistence.entities.AddressEntity;
-import com.greta.e_shop_api.presistence.repositories.AddressRepository;
+import com.greta.e_shop_api.persistence.entities.AddressEntity;
+import com.greta.e_shop_api.persistence.repositories.AddressRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

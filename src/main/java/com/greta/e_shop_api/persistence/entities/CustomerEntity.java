@@ -1,4 +1,5 @@
-package com.greta.e_shop_api.presistence.entities;
+package com.greta.e_shop_api.persistence.entities;
+
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,40 +8,31 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "order_item")
+@Table(name = "customer")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class OrderItemsEntity {
-
+public class CustomerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(nullable = false)
-    private int quantity;
+    private String firstName;
 
     @Column(nullable = false)
-    private Double unitPrice;
+    private String lastName;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
-
-    @Column(nullable = true)
-    private Double total;
-
-    @Column(nullable = true)
-    private Double tvaAmount;
-
-    @Column(nullable = true)
-    private Double totalWithTva;
-
 
     @PrePersist
     public void onCreate() {
@@ -53,12 +45,11 @@ public class OrderItemsEntity {
         updatedAt = LocalDateTime.now();
     }
 
-    @ManyToOne
-    @JoinColumn(name = "items_id", nullable = false)
-    private OrderEntity order;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AddressEntity> addresses = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private ProductEntity product;
-
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 }
+

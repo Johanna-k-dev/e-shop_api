@@ -2,7 +2,7 @@ package com.greta.e_shop_api.mappers;
 
 import com.greta.e_shop_api.exposition.dtos.AddressRequestDTO;
 import com.greta.e_shop_api.exposition.dtos.AddressResponseDTO;
-import com.greta.e_shop_api.presistence.entities.AddressEntity;
+import com.greta.e_shop_api.persistence.entities.AddressEntity;
 
 public class AddressMapper {
 

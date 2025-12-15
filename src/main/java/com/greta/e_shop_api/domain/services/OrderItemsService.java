@@ -5,12 +5,12 @@ import com.greta.e_shop_api.exceptions.ResourceNotFoundException;
 import com.greta.e_shop_api.exposition.dtos.OrderItemsRequestDTO;
 import com.greta.e_shop_api.exposition.dtos.OrderItemsResponseDTO;
 import com.greta.e_shop_api.mappers.OrderItemsMapper;
-import com.greta.e_shop_api.presistence.entities.OrderEntity;
-import com.greta.e_shop_api.presistence.entities.OrderItemsEntity;
-import com.greta.e_shop_api.presistence.entities.ProductEntity;
-import com.greta.e_shop_api.presistence.repositories.OrderItemsRepository;
-import com.greta.e_shop_api.presistence.repositories.OrderRepository;
-import com.greta.e_shop_api.presistence.repositories.ProductRepository;
+import com.greta.e_shop_api.persistence.entities.OrderEntity;
+import com.greta.e_shop_api.persistence.entities.OrderItemsEntity;
+import com.greta.e_shop_api.persistence.entities.ProductEntity;
+import com.greta.e_shop_api.persistence.repositories.OrderItemsRepository;
+import com.greta.e_shop_api.persistence.repositories.OrderRepository;
+import com.greta.e_shop_api.persistence.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +25,10 @@ public class OrderItemsService {
     private final ProductRepository productRepository;
     private static final double TVA_RATE = 0.2;
 
-    public OrderItemsResponseDTO create(OrderItemsRequestDTO dto) {
+    public OrderItemsResponseDTO create(Long orderId, OrderItemsRequestDTO dto) {
 
-        OrderEntity order = orderRepository.findById(dto.orderId())
-                .orElseThrow(() -> new ResourceNotFoundException("Commande introuvable : " + dto.orderId()));
+        OrderEntity order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Commande introuvable : " + orderId));
 
         ProductEntity product = productRepository.findById(dto.productId())
                 .orElseThrow(() -> new ResourceNotFoundException("Produit introuvable : " + dto.productId()));
@@ -66,13 +66,13 @@ public class OrderItemsService {
         return OrderItemsMapper.toDto(entity);
     }
 
-    public OrderItemsResponseDTO update(Long id, OrderItemsRequestDTO dto) {
+    public OrderItemsResponseDTO update(Long itemId, Long orderId, OrderItemsRequestDTO dto) {
 
-        OrderItemsEntity entity = orderItemRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Item introuvable : " + id));
+        OrderItemsEntity entity = orderItemRepository.findById(itemId)
+                .orElseThrow(() -> new ResourceNotFoundException("Item introuvable : " + itemId));
 
-        OrderEntity order = orderRepository.findById(dto.orderId())
-                .orElseThrow(() -> new ResourceNotFoundException("Commande introuvable : " + dto.orderId()));
+        OrderEntity order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Commande introuvable : " + orderId));
 
         ProductEntity product = productRepository.findById(dto.productId())
                 .orElseThrow(() -> new ResourceNotFoundException("Produit introuvable : " + dto.productId()));
@@ -94,6 +94,7 @@ public class OrderItemsService {
 
         return OrderItemsMapper.toDto(orderItemRepository.save(entity));
     }
+
 
     public void delete(Long id) {
         OrderItemsEntity entity = orderItemRepository.findById(id)
