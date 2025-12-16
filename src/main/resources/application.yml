@@ -1,14 +1,33 @@
+# application.yml
 spring:
+  application:
+    name: eshop_api
+
   profiles:
     active:
       - development
+
   config:
     import:
       - "configtree:./"
+
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
     properties:
       hibernate:
-        format-sql: true
+        format_sql: true
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
+
+  web:
+    resources:
+      add-mappings: false
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION_MS}

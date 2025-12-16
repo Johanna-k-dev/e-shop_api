@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.greta</groupId>
-	<artifactId>e-shop_api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>e-shop_api</name>
-	<description>e-shop project for Spring Boot 21 Maven whith JPA</description>
+    <artifactId>backend</artifactId>
+    <version>1.0.0</version>
+    <name>backend_e-shop-ci-cd</name>
+    <description>Backend for e-shop project demo for CI/CD</description>
 	<url/>
 	<licenses>
 		<license/>
