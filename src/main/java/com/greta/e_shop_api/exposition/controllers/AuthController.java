@@ -8,6 +8,7 @@ import com.greta.e_shop_api.persistence.entities.UserEntity;
 import com.greta.e_shop_api.persistence.repositories.UserRepository;
 import com.greta.e_shop_api.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -39,17 +40,15 @@ public class AuthController {
     public ResponseEntity<String> registerUser(@RequestBody RegisterUserRequestDTO request) {
         boolean alreadyExists = userRepository.existsByEmail(request.email());
         if (alreadyExists) {
-            String response = "Cet email est déjà utilisé !";
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.badRequest().body("Cet email est déjà utilisé !");
         }
 
         UserEntity user = request.toEntity();
-        // 👇 On SET le mot de passe depuis le Controller, pas depuis le Mapper
         user.setPassword(passwordEncoder.encode(request.password()));
         userRepository.save(user);
 
-        String response = "Utilisateur inscrit avec succès !";
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Utilisateur inscrit avec succès !");
     }
 
     @PostMapping("/login")

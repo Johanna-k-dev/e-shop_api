@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.greta</groupId>
-	<artifactId>e-shop_api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>e-shop_api</name>
-	<description>e-shop project for Spring Boot 21 Maven whith JPA</description>
+    <artifactId>backend</artifactId>
+    <version>1.0.0</version>
+    <name>backend_e-shop-ci-cd</name>
+    <description>Backend for e-shop project demo for CI/CD</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -30,6 +30,28 @@
 		<java.version>21</java.version>
         <lombok.version>1.18.42</lombok.version>
 	</properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>1.21.3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.docker-java</groupId>
+                <artifactId>docker-java-api</artifactId>
+                <version>3.4.2</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.docker-java</groupId>
+                <artifactId>docker-java-transport-zerodep</artifactId>
+                <version>3.4.2</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -100,6 +122,16 @@
             <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
@@ -138,6 +170,11 @@
         </profile>
         <profile>
             <id>e2e-tests</id>
+
+            <properties>
+                <api.version>1.52</api.version>
+            </properties>
+
             <build>
                 <plugins>
                     <plugin>
@@ -148,12 +185,16 @@
                             <includes>
                                 <include>**/e2e/**/*.java</include>
                             </includes>
+                            <systemPropertyVariables>
+                                <api.version>${api.version}</api.version>
+                            </systemPropertyVariables>
+                            <forkCount>1</forkCount>
+                            <reuseForks>false</reuseForks>
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
         </profile>
-
     </profiles>
     <build>
         <plugins>

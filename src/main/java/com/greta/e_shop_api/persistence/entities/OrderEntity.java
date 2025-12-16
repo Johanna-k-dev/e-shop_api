@@ -42,6 +42,8 @@ public class OrderEntity {
         updatedAt = LocalDateTime.now();
     }
 
+
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
     private CustomerEntity customer;
