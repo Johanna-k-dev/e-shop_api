@@ -53,7 +53,7 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/webjars/**"
                         ).permitAll()
-                        .requestMatchers(HttpMethod.POST,"/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/auth/login", "/auth/register").permitAll()
 
                         // ADMIN ONLY
                         .requestMatchers(HttpMethod.POST,   "/product/**", "/category/**", "/product-categories/**").hasRole("ADMIN")
@@ -67,7 +67,8 @@ public class SecurityConfig {
                                 "/order/**",
                                 "/order-items/**",
                                 "/favorites/**",
-                                "/customers/**"
+                                "/customers/**",
+                                "/payment/**"
                         ).hasAnyRole("USER", "ADMIN")
 
                         .anyRequest().authenticated()
