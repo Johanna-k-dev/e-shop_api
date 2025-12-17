@@ -44,7 +44,7 @@ jobs:
           context: .
           file: ./docker/Dockerfile
           push: true
-          tags: johanna89/spring-app:${{ steps.set_tag.outputs.tag }}
+          tags: eshop-api-staging/spring-app:${{ steps.set_tag.outputs.tag }}
 
   deploy:
     name: 🚀 Deploy to VPS
