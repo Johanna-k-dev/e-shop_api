@@ -1,4 +1,7 @@
 spring:
+  config:
+    import: ""
+
   datasource:
     url: jdbc:h2:mem:eshop_test;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     driver-class-name: org.h2.Driver
@@ -14,6 +17,5 @@ spring:
       mode: never
 
 jwt:
-  secret: "test-secret-please-change"
-  expiration: 3600000  # 1h en ms
-
+  secret: "test-secret"
+  expiration: 3600000
