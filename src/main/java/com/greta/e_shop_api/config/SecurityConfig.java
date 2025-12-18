@@ -44,8 +44,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         //PUBLIC
                         .requestMatchers(HttpMethod.GET,
-                                "/product/**",
-                                "/category/**",
+                                "/products/**",
+                                "/categories/**",
                                 "/product-categories/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
@@ -56,15 +56,15 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/auth/login", "/auth/register").permitAll()
 
                         // ADMIN ONLY
-                        .requestMatchers(HttpMethod.POST,   "/product/**", "/category/**", "/product-categories/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT,    "/product/**", "/category/**", "/product-categories/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PATCH,  "/product/**", "/category/**", "/product-categories/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/product/**", "/category/**", "/product-categories/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST,   "/products/**", "/category/**", "/product-categories/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,    "/products/**", "/category/**", "/product-categories/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH,  "/products/**", "/category/**", "/product-categories/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/products/**", "/category/**", "/product-categories/**").hasRole("ADMIN")
 
                         // USER + ADMIN
                         .requestMatchers(
                                 "/addresses/**",
-                                "/order/**",
+                                "/orders/**",
                                 "/order-items/**",
                                 "/favorites/**",
                                 "/customers/**",
