@@ -47,7 +47,7 @@ jobs:
           tags: eshop-api-staging/spring-app:${{ steps.set_tag.outputs.tag }}
 
   deploy:
-    name: 🚀 Deploy to VPS
+    name: 🚀 Deploy to VPS .
     needs: build-and-push
     runs-on: ubuntu-latest
 
